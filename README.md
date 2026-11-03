@@ -6,6 +6,7 @@
 [![SQLite WAL+FTS5](https://img.shields.io/badge/SQLite-WAL%20%2B%20FTS5-003B57?logo=sqlite&logoColor=white)](https://sqlite.org/)
 [![Pytest](https://img.shields.io/badge/Pytest-Verified%20Suites-0A9EDC?logo=pytest&logoColor=white)](https://docs.pytest.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Discussions](https://img.shields.io/badge/Discussions-Join%20Q%26A-blue?logo=github&logoColor=white)](https://github.com/Cappuccino-san/Production-Agent-Patterns/discussions)
 
 A comprehensive suite of 15 standalone, production-grade agentic AI engineering architectures, microservices, and design patterns. Each tool is built with **FastAPI**, **LangGraph**, **Pydantic v2**, **SQLite (WAL mode + FTS5)**, and containerized Docker configurations, backed by exhaustive Pytest test suites.
 
