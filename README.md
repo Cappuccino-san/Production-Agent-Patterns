@@ -123,6 +123,12 @@ pytest
 
 ---
 
+## Community & Contributors
+
+Contributions, ideas, and feedback are always welcome! Feel free to explore discussions, open issues, or submit a pull request.
+
+---
+
 ## License
 
 This project is licensed under the MIT License.
