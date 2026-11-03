@@ -10,7 +10,7 @@
 
 A comprehensive suite of 15 standalone, production-grade agentic AI engineering architectures, microservices, and design patterns. Each tool is built with **FastAPI**, **LangGraph**, **Pydantic v2**, **SQLite (WAL mode + FTS5)**, and containerized Docker configurations, backed by exhaustive Pytest test suites.
 
-----
+-----
 
 ## Architecture Overview
 
