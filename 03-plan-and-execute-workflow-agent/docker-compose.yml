@@ -1,0 +1,28 @@
+services:
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: plan-and-execute-workflow-agent
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_PATH=/app/data/plans.db
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+      - MAX_STEPS=10
+      - MAX_ITERATIONS=15
+      - REPLAN_THRESHOLD=0.7
+    volumes:
+      - agent-data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/live')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+volumes:
+  agent-data:
+    driver: local

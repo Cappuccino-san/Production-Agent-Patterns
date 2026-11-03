@@ -1,0 +1,25 @@
+services:
+  hitl-gate-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: async-hitl-slack-gate:latest
+    container_name: async-hitl-slack-gate
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_PATH=/app/data/hitl_gate.db
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+      - APPROVAL_TIMEOUT_HOURS=72
+    volumes:
+      - hitl_data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/live"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  hitl_data:

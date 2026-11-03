@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  fallback-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-to-browser-fallback-agent
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_PATH=/app/data/fallback_agent.db
+      - LOG_LEVEL=INFO
+    volumes:
+      - fallback_data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  fallback_data:

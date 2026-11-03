@@ -1,0 +1,25 @@
+services:
+  swarm-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: typed-multi-agent-swarm:latest
+    container_name: typed-multi-agent-swarm
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_PATH=/app/data/swarm.db
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+      - MAX_SWARM_ITERATIONS=3
+    volumes:
+      - swarm_data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/live"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  swarm_data:

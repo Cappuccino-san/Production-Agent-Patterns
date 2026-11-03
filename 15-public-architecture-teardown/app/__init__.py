@@ -1,0 +1,1 @@
+"""Public Architecture Teardown package."""

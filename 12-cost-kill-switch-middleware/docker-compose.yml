@@ -1,0 +1,25 @@
+services:
+  cost-kill-switch:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cost-kill-switch-middleware:latest
+    container_name: cost-kill-switch-middleware
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_PATH=/app/data/cost_control.db
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+      - MAX_SPEND_LIMIT_USD=0.50
+    volumes:
+      - cost_data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/live"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  cost_data:

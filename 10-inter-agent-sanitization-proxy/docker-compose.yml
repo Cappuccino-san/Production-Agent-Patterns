@@ -1,0 +1,25 @@
+services:
+  sanitization-proxy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: inter-agent-sanitization-proxy:latest
+    container_name: inter-agent-sanitization-proxy
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_PATH=/app/data/proxy.db
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+      - BLOCK_CRITICAL_INJECTIONS=true
+    volumes:
+      - proxy_data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/live"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  proxy_data:

@@ -1,0 +1,25 @@
+services:
+  agent-tracer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: opentelemetry-agent-tracer:latest
+    container_name: opentelemetry-agent-tracer
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_PATH=/app/data/tracer.db
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+      - DEFAULT_TELEMETRY_SINK=LangSmith
+    volumes:
+      - tracer_data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/live"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  tracer_data:

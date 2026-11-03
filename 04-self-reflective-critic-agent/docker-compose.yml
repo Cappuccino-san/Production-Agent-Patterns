@@ -1,0 +1,27 @@
+services:
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: self-reflective-critic-agent
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_PATH=/app/data/reflections.db
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+      - DEFAULT_THRESHOLD=85.0
+      - DEFAULT_MAX_ITERATIONS=4
+    volumes:
+      - reflection-data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/live')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+volumes:
+  reflection-data:
+    driver: local

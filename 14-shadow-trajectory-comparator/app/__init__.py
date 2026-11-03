@@ -1,0 +1,1 @@
+"""Shadow Trajectory Comparator package."""

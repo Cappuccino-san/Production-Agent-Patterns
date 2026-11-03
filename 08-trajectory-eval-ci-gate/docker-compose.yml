@@ -1,0 +1,24 @@
+services:
+  trajectory-eval-gate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: trajectory-eval-ci-gate:latest
+    container_name: trajectory-eval-ci-gate
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_PATH=/app/data/trajectory_eval.db
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+    volumes:
+      - traj_data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/live"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  traj_data:

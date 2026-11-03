@@ -1,0 +1,25 @@
+services:
+  sandbox-executor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: sandboxed-code-executor:latest
+    container_name: sandboxed-code-executor
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_PATH=/app/data/sandbox.db
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+      - ENABLE_NETWORK_EGRESS=false
+    volumes:
+      - sandbox_data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/live"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  sandbox_data:

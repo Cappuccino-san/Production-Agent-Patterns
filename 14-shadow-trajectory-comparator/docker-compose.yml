@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  comparator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shadow-trajectory-comparator
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_PATH=/app/data/shadow_comparator.db
+      - SHADOW_SAMPLE_RATE=0.05
+      - LOG_LEVEL=INFO
+    volumes:
+      - shadow_data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  shadow_data:

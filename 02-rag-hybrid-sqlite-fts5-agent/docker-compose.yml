@@ -1,0 +1,27 @@
+services:
+  rag-agent-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rag-hybrid-sqlite-fts5-agent
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_PATH=/app/data/rag_documents.db
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+      - DEFAULT_TOP_K=5
+      - RELEVANCE_THRESHOLD=0.0
+    volumes:
+      - rag-data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/live')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+volumes:
+  rag-data:
+    driver: local
