@@ -16,27 +16,42 @@ A comprehensive suite of 15 standalone, production-grade agentic AI engineering 
 ```mermaid
 flowchart TD
     subgraph CoreAgents["Core Autonomous Agents"]
+        direction LR
         A1["01: Prompt-to-Code ReAct Agent"]
         A2["02: Hybrid RAG SQLite FTS5"]
         A3["03: Plan-and-Execute Workflow"]
         A4["04: Self-Reflective Critic"]
         A5["05: Human-in-the-Loop Gate"]
         A6["06: Typed Multi-Agent Swarm"]
+        A1 ~~~ A2
+        A2 ~~~ A3
+        A3 ~~~ A4
+        A4 ~~~ A5
+        A5 ~~~ A6
     end
 
     subgraph GovernanceSafety["Governance, Observability & Safety"]
+        direction LR
         G7["07: Async Slack HITL Gate"]
         G8["08: Trajectory Eval CI Gate"]
         G9["09: OpenTelemetry Tracer"]
         G10["10: Inter-Agent Sanitization Proxy"]
         G11["11: Sandboxed Code Executor"]
         G12["12: Cost Kill-Switch Middleware"]
+        G7 ~~~ G8
+        G8 ~~~ G9
+        G9 ~~~ G10
+        G10 ~~~ G11
+        G11 ~~~ G12
     end
 
     subgraph ResilienceOps["Resilience & Production Operations"]
+        direction LR
         R13["13: API-to-Browser Fallback"]
         R14["14: Shadow Trajectory Comparator"]
         R15["15: Architecture Teardown Cockpit"]
+        R13 ~~~ R14
+        R14 ~~~ R15
     end
 
     CoreAgents --> GovernanceSafety
@@ -110,3 +125,4 @@ pytest
 ## License
 
 This project is licensed under the MIT License.
+
